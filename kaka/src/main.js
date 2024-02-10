@@ -129,9 +129,10 @@ Vue.component('product-details', {
 
 Vue.component('product-review', {
     template: `
-      <div>
-        <h2>Reviews</h2>
+      <div class="dec">
+       <div> <h2>Reviews</h2>
         <p v-if="!reviews.length">There are no reviews yet.</p>
+       </div>
         <ul>
           <li v-for="review in reviews" :key="review.id">
             <p>{{ review.name }}</p>
@@ -147,10 +148,7 @@ Vue.component('product-review', {
               <li v-for="error in errors">{{ error }}</li>
             </ul>
           </div>
-          <p>
-            <label for="name">Name:</label>
-            <input id="name" v-model="name" placeholder="name">
-          </p>
+         
           <p>
             <label for="name">Name:</label>
             <input id="name" v-model="name" placeholder="name">
@@ -186,6 +184,7 @@ Vue.component('product-review', {
             <input type="submit" value="Submit">
           </p>
         </form>
+      </div>
       </div>
     `,
     data() {

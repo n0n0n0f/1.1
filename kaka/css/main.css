@@ -91,3 +91,7 @@ textarea {
 .text_through{
     text-decoration: line-through;
 }
+
+.dec{
+display: flex;
+}
