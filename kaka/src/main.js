@@ -129,9 +129,11 @@ Vue.component('product-details', {
 let app = new Vue({
     el: '#app',
     data: {
-        premium: true
+        premium: true,
+        cart: 0
     }
 })
+
 
 
 
