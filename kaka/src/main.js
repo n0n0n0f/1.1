@@ -1,4 +1,11 @@
 Vue.component('product', {
+    props: {
+        premium: {
+            type: Boolean,
+            required: true
+        }
+    },
+
     template: `
       <div class="product">
         <div class="product-image">
@@ -6,6 +13,7 @@ Vue.component('product', {
         </div>
         <div class="product-info">
           <h1>{{ title }}</h1>
+          <p>Shipping: {{ shipping }}</p>
           <a :href="link">More products like this</a>
           <p v-if="inventory > 10">In stock</p>
           <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
@@ -41,6 +49,7 @@ Vue.component('product', {
     `,
     data() {
         return {
+
             product: "Socks",
             brand: 'Vue Mastery',
             description: "A pair of warm, fuzzy socks",
@@ -65,6 +74,7 @@ Vue.component('product', {
             ],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             cart: 0,
+
         }
     },
     methods: {
@@ -90,12 +100,25 @@ Vue.component('product', {
             } else {
                 return this.title + ' is not sale!'
             }
+        },
+        shipping() {
+            if (this.premium) {
+                return "Free";
+            } else {
+                return 2.99
+            }
         }
+
     }
 })
 
-new Vue({
+let app = new Vue({
     el: '#app',
-});
+    data: {
+        premium: true
+    }
+})
+
+
 
 
