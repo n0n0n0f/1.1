@@ -5,7 +5,6 @@ Vue.component('product', {
             required: true
         }
     },
-
     template: `
       <div class="product">
         <div class="product-image">
@@ -111,6 +110,21 @@ Vue.component('product', {
 
     }
 })
+Vue.component('product-details', {
+    props: {
+        details: {
+            type: Array,
+            required: true
+        }
+    },
+    template: `
+        <div class="product-details">
+            <ul>
+                <li v-for=" detail in details">{{ detail }}</li>
+            </ul>
+        </div>
+`
+});
 
 let app = new Vue({
     el: '#app',
