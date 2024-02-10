@@ -110,7 +110,12 @@ Vue.component('product', {
             }
         }
 
-    }
+    },
+    mounted() {
+        eventBus.$on('review-submitted', function (productReview) {
+            this.reviews.push(productReview);
+        }.bind(this));
+    },
 })
 Vue.component('product-details', {
     props: {
@@ -120,20 +125,19 @@ Vue.component('product-details', {
         }
     },
     template: `
-        <div class="product-details">
-            <ul>
-                <li v-for=" detail in details">{{ detail }}</li>
-            </ul>
-        </div>
-`
+      <div class="product-details">
+        <ul>
+          <li v-for=" detail in details">{{ detail }}</li>
+        </ul>
+      </div>
+    `
 });
 
 Vue.component('product-review', {
     template: `
       <div class="dec">
-       <div> <h2>Reviews</h2>
-        <p v-if="!reviews.length">There are no reviews yet.</p>
-       </div>
+        <div>
+        </div>
         <ul>
           <li v-for="review in reviews" :key="review.id">
             <p>{{ review.name }}</p>
@@ -149,7 +153,7 @@ Vue.component('product-review', {
               <li v-for="error in errors">{{ error }}</li>
             </ul>
           </div>
-         
+
           <p>
             <label for="name">Name:</label>
             <input id="name" v-model="name" placeholder="name">
@@ -186,7 +190,7 @@ Vue.component('product-review', {
           </p>
         </form>
       </div>
-      
+
     `,
     data() {
         return {
@@ -207,7 +211,7 @@ Vue.component('product-review', {
                     review: this.review,
                     rating: this.rating,
                     recommend: this.recommend,
-                    id: this.reviews.length + 1 // Add unique id for each review
+                    id: this.reviews.length + 1
                 };
                 eventBus.$emit('review-submitted', productReview)
                 this.name = null;
@@ -252,7 +256,7 @@ Vue.component('product-tabs', {
     </ul>
 </div>
 <div v-show="selectedTab === 'Make a Review'">
-  <product-review></product-review>
+    <product-review></product-review>
 </div>
 </div>
 
@@ -289,13 +293,11 @@ let app = new Vue({
         addReview(productReview) {
             this.reviews.push(productReview);
         }
+    },
+    mounted() {
+        eventBus.$on('review-submitted', productReview => {
+            this.reviews.push(productReview);
+        });
     }
+
 });
-
-
-
-
-
-
-
-
