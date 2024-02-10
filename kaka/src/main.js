@@ -27,9 +27,6 @@ Vue.component('product', {
           <ul>
             <li v-for="size in sizes">{{ size }}</li>
           </ul>
-          <div class="cart">
-            <p>Cart({{ cart }})</p>
-          </div>
 
           <button
               v-on:click="addToCart"
@@ -48,7 +45,7 @@ Vue.component('product', {
     `,
     data() {
         return {
-
+            selectedVariant: 0,
             product: "Socks",
             brand: 'Vue Mastery',
             description: "A pair of warm, fuzzy socks",
@@ -72,22 +69,26 @@ Vue.component('product', {
                 }
             ],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-            cart: 0,
+            cart: [],
 
         }
     },
     methods: {
-        addToCart() {
-            this.cart += 1;
+        ReduceToCart(){
+            this.$emit('reduce-to-cart', this.variants[this.selectedVariant].variantId);
+
         },
+        addToCart() {
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
+
+
+        },
+
         updateProduct(variantImage) {
             this.image = variantImage;
         },
-        ReduceToCart() {
-            if (this.cart >= 1){
-                this.cart -= 1
-            }
-        }
+
+
     },
     computed: {
         title() {
@@ -130,8 +131,22 @@ let app = new Vue({
     el: '#app',
     data: {
         premium: true,
-        cart: 0
-    }
+        cart: []
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id) ;
+        },
+
+        updateCartminus(id) {
+            const index = this.cart.indexOf(id);
+            if (index !== -1){
+                this.cart.splice(index, 1);
+            }
+            }
+        },
+
+
 })
 
 
