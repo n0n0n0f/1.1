@@ -235,16 +235,24 @@ Vue.component('product-tabs', {
         reviews: {
             type: Array,
             required: false
+        },
+        details: {
+            type: Array,
+            required: false
+        },
+        selectedTab: {
+            type: String,
+            required: true
         }
     },
     template: `
       <div>
         <ul>
-                <span class="tab"
-                      :class="{ activeTab: selectedTab === tab }"
-                      v-for="(tab, index) in tabs"
-                      @click="selectedTab = tab"
-                >{{ tab }}</span>
+          <span class="tab"
+                :class="{ activeTab: selectedTab === tab }"
+                v-for="(tab, index) in tabs"
+                @click="selectedTab = tab"
+          >{{ tab }}</span>
         </ul>
         <div v-show="selectedTab === 'Reviews'">
           <p v-if="!reviews.length">There are no reviews yet.</p>
@@ -269,11 +277,11 @@ Vue.component('product-tabs', {
     `,
     data() {
         return {
-            tabs: ['Reviews', 'Make a Review', 'Shipping', 'Details'],
-            selectedTab: 'Reviews'
+            tabs: ['Reviews', 'Make a Review', 'Shipping', 'Details']
         }
     }
 });
+
 
 
 Vue.component('product-shipping', {
@@ -299,20 +307,18 @@ let app = new Vue({
     data: {
         premium: true,
         cart: [],
-        reviews: []
+        reviews: [],
+        details: ['80% cotton', '20% polyester', 'Gender-neutral']
     },
     methods: {
         updateCart(id) {
             this.cart.push(id);
         },
-        updateCartminus(id) {
+        removeFromCart(id){
             const index = this.cart.indexOf(id);
-            if (index !== -1) {
+            if (index !== -1){
                 this.cart.splice(index, 1);
             }
-        },
-        addReview(productReview) {
-            this.reviews.push(productReview);
         }
     },
     mounted() {
@@ -320,5 +326,4 @@ let app = new Vue({
             this.reviews.push(productReview);
         });
     }
-
 });

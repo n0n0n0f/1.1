@@ -13,8 +13,10 @@
     <div class="cart">
         <p>Cart({{ cart.length }})</p>
     </div>
-    <product :premium="premium" @add-to-cart="updateCart" @reduce-to-cart="updateCartminus"></product>
-    <product-tabs :reviews="reviews"></product-tabs>
+    <product :premium="premium" @add-to-cart="updateCart" @reduce-to-cart="updateCartminus" :details="details"></product>
+    <product-tabs :reviews="reviews" :details="details"></product-tabs>
+
+
 
 </div>
 <script defer src="/src/vue.js"></script>
