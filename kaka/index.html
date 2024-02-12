@@ -13,14 +13,14 @@
     <div class="cart">
         <p>Cart({{ cart.length }})</p>
     </div>
-    <product :premium="premium" @add-to-cart="updateCart" @reduce-to-cart="updateCartminus" :details="details"></product>
+    <product :premium="premium" @add-to-cart="updateCart" @reduce-to-cart="reduceToCart" :details="details"></product>
     <product-tabs :reviews="reviews" :details="details"></product-tabs>
 
 
 
 </div>
-<script defer src="/src/vue.js"></script>
-<script defer src="/src/main.js"></script>
+<script defer src="./src/vue.js"></script>
+<script defer src="./src/main.js"></script>
 
 </body>
 </html>

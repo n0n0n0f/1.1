@@ -36,7 +36,7 @@ Vue.component('product', {
             Add to cart
           </button>
           <button
-              v-on:click="ReduceToCart"
+              v-on:click="reduceToCart"
               :disabled="!inStock"
               :class="{ disabledButton: !inStock }">
             Reduce to cart
@@ -75,7 +75,7 @@ Vue.component('product', {
         }
     },
     methods: {
-        ReduceToCart(){
+        reduceToCart(){
             this.$emit('reduce-to-cart', this.variants[this.selectedVariant].variantId);
 
         },
@@ -314,7 +314,7 @@ let app = new Vue({
         updateCart(id) {
             this.cart.push(id);
         },
-        removeFromCart(id){
+        reduceToCart(id){
             const index = this.cart.indexOf(id);
             if (index !== -1){
                 this.cart.splice(index, 1);
