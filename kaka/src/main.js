@@ -28,8 +28,7 @@ Vue.component('product', {
           <ul>
             <li v-for="size in sizes">{{ size }}</li>
           </ul>
-
-          <button
+           <button
               v-on:click="addToCart"
               :disabled="!inStock"
               :class="{ disabledButton: !inStock }">
@@ -37,8 +36,8 @@ Vue.component('product', {
           </button>
           <button
               v-on:click="reduceToCart"
-              :disabled="!inStock"
-              :class="{ disabledButton: !inStock }">
+              :disabled="inStock == 10"
+              :class="{ disabledButton: inStock == 10 }">
             Reduce to cart
           </button>
         </div>
@@ -53,7 +52,7 @@ Vue.component('product', {
             image: "./assets/vmSocks-green-onWhite.jpg",
             altText: "A pair of socks",
             link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks",
-            inStock: true,
+            inStock: 10,
             inventory: 0,
             onSale: true,
             details: ['80% cotton', '20% polyester', 'Gender-neutral'],
@@ -67,6 +66,7 @@ Vue.component('product', {
                     variantId: 2235,
                     variantColor: 'blue',
                     variantImage: "./assets/vmSocks-blue-onWhite.jpg",
+
                 }
             ],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
@@ -76,13 +76,16 @@ Vue.component('product', {
     },
     methods: {
         reduceToCart(){
-            this.$emit('reduce-to-cart', this.variants[this.selectedVariant].variantId);
-
+            if (this.inStock > 0 < 10 ) {
+                this.$emit('reduce-to-cart', this.variants[this.selectedVariant].variantId);
+                this.inStock++;
+            }
         },
         addToCart() {
-            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
-
-
+            if (this.inStock > 0) {
+                this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
+                this.inStock--;
+            }
         },
 
         updateProduct(variantImage) {
