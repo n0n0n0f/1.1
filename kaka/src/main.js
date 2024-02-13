@@ -316,17 +316,39 @@ let app = new Vue({
     methods: {
         updateCart(id) {
             this.cart.push(id);
+            this.saveData();
         },
         reduceToCart(id){
             const index = this.cart.indexOf(id);
             if (index !== -1){
                 this.cart.splice(index, 1);
+                this.saveData();
+            }
+        },
+        saveData() {
+            // Сохраняем данные о корзине и отзывах в localStorage
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            localStorage.setItem('reviews', JSON.stringify(this.reviews));
+        },
+        loadData() {
+            // Загружаем данные о корзине и отзывах из localStorage
+            const cartData = localStorage.getItem('cart');
+            const reviewsData = localStorage.getItem('reviews');
+
+            if (cartData) {
+                this.cart = JSON.parse(cartData);
+            }
+            if (reviewsData) {
+                this.reviews = JSON.parse(reviewsData);
             }
         }
     },
     mounted() {
         eventBus.$on('review-submitted', productReview => {
             this.reviews.push(productReview);
+            this.saveData();
         });
+        // Загружаем данные при загрузке компонента
+        this.loadData();
     }
 });
